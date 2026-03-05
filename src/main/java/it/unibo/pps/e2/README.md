@@ -56,3 +56,85 @@ it could only move to 3 squares,
 i.e., (3,1) by capturing the pawn, (2,2) and (2,4).
 Clicking on an invalid position should not do anything.
 When the knight lands on the pawn, the application should be closed.
+
+```mermaid
+classDiagram
+    direction TB
+
+    class Movement {
+        <<interface>>
+        canMoveHere(startingPosition: Pair, newPosition: Pair) bool
+    }
+
+    class Piece {
+        <<interface>>
+        moveHere(newPosition: Pair) bool
+        isHere(position: Pair) bool
+        isInSamePlace(otherPiece: Piece) bool
+    }
+
+    class PieceImpl {
+        -position: Pair~~ 
+        -movement: Movement 
+        +PieceImpl(startingPosition: Pair, movement: Movement)
+        +moveHere(newPosition: Pair) bool
+        +isHere(position: Pair) bool
+        +isInSamePlace(otherPiece: Piece) bool
+    }
+
+    class PieceFactory {
+        <<interface>>
+        createKnight(startingPosition: Pair) Piece
+        createPawn(startingPosition: Pair) Piece
+    }
+
+    class PieceFactoryImpl {
+        +createKnight(startingPosition: Pair) Piece
+        +createPawn(startingPosition: Pair) Piece
+    }
+
+    class BoardPositionsGenerator {
+        <<interface>>
+        createNewPosition() Pair~~
+    }
+
+    class BoardPositionsGeneratorImpl {
+        -allPositions: Set
+        -random: Random
+        -dimension: int
+        +BoardPositionsGeneratorImpl(int size)
+        +createNewPosition() Pair~~
+        -isFull() bool
+    }
+
+    class Logics {
+        <<interface>>
+        hit(row: int, col: int) bool
+        hasKnight(row: int, col: int) bool
+        hasPawn(row: int, col: int) bool
+    }
+
+    class LogicsImpl {
+        -pawn: Piece
+        -knight: Piece
+        -positionsGenerator: BoardPositionsGenerator 
+        -size: int 
+        +LogicsImpl(size: int)
+        +LogicsImpl(size: int, pawn: Piece, knight: Piece)
+        +hit(row: int, col: int) bool
+        +hasKnight(row: int, col: int) bool
+        +hasPawn(row: int, col: int) bool
+    }
+
+    Piece <|.. PieceImpl
+    PieceFactory <|.. PieceFactoryImpl
+    BoardPositionsGenerator <|.. BoardPositionsGeneratorImpl
+    Logics <|.. LogicsImpl
+
+    PieceImpl o--> Movement
+    PieceFactoryImpl ..> PieceImpl
+
+    LogicsImpl o--> Piece
+    LogicsImpl o--> BoardPositionsGenerator
+    LogicsImpl ..> PieceFactory
+```

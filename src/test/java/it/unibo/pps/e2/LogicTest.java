@@ -8,20 +8,23 @@ import static org.junit.jupiter.api.Assertions.*;
 public class LogicTest {
 
     private static final int SIZE = 5;
-    private Pair<Integer, Integer> knight;
-    private Pair<Integer, Integer> pawn;
+    private Pair<Integer, Integer> knightStartingPosition;
+    private Pair<Integer, Integer> pawnPosition;
+    private final PieceFactory pieceFactory =new PieceFactoryImpl();
     private Logics logic;
 
     @BeforeEach
     void init() {
-        knight = new Pair<>(2, 2);
-        pawn = new Pair<>(2, 4);
+        knightStartingPosition = new Pair<>(2, 2);
+        pawnPosition = new Pair<>(2, 4);
+        final Piece knight = pieceFactory.createKnight(knightStartingPosition);
+        final Piece pawn = pieceFactory.createPawn(pawnPosition);
         logic = new LogicsImpl(SIZE, pawn, knight);
     }
 
     @Test
     void knightShouldNotHitUnreachablePosition(){
-        assertFalse(logic.hit(pawn.getX(), pawn.getY()));
+        assertFalse(logic.hit(pawnPosition.getX(), pawnPosition.getY()));
     }
 
     @Test
@@ -30,7 +33,7 @@ public class LogicTest {
                 new Pair<>(3, 4),
                 new Pair<>(1, 5), //outOfBound
                 new Pair<>(0, 3),
-                new Pair<>(pawn.getX(), pawn.getY())
+                new Pair<>(pawnPosition.getX(), pawnPosition.getY())
         ); // this sequence of moves hit the knight passing over board bounds
         logic.hit(impossibleHitSequence.getFirst().getX(), impossibleHitSequence.getFirst().getY());
         final Pair<Integer, Integer> outOfBoundPosition = impossibleHitSequence.get(1);
@@ -41,7 +44,7 @@ public class LogicTest {
     void knightShouldHitWithCorrectSequence(){
         final List<Pair<Integer, Integer>> correctHitSequence = List.of(
                 new Pair<>(0, 3),
-                new Pair<>(pawn.getX(), pawn.getY())
+                new Pair<>(pawnPosition.getX(), pawnPosition.getY())
         );
         for(Pair<Integer, Integer> move: correctHitSequence.subList(0, correctHitSequence.size() -1)){
             logic.hit(move.getX(), move.getY());
@@ -51,20 +54,20 @@ public class LogicTest {
 
     @Test
     void hasKnightInWrongPositionShouldReturnFalse(){
-        assertFalse(logic.hasKnight(pawn.getX(), pawn.getY()));
+        assertFalse(logic.hasKnight(pawnPosition.getX(), pawnPosition.getY()));
     }
 
     @Test
     void hasKnightInCorrectPositionShouldReturnTrue(){
-        assertTrue(logic.hasKnight((knight.getX()), knight.getY()));
+        assertTrue(logic.hasKnight((knightStartingPosition.getX()), knightStartingPosition.getY()));
     }
     @Test
     void hasPawnInWrongPositionShouldReturnFalse(){
-        assertFalse(logic.hasPawn(knight.getX(), knight.getY()));
+        assertFalse(logic.hasPawn(knightStartingPosition.getX(), knightStartingPosition.getY()));
     }
 
     @Test
     void hasPawnInCorrectPositionShouldReturnTrue(){
-        assertTrue(logic.hasPawn((pawn.getX()), pawn.getY()));
+        assertTrue(logic.hasPawn((pawnPosition.getX()), pawnPosition.getY()));
     }
 }
