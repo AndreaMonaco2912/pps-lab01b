@@ -1,4 +1,5 @@
 # Exercise 2 Description
+
 Consider the above [program](#program-description),
  which is already working ([`Main`](Main.java) should launch the described program)
  and is implemented with a GUI class
@@ -9,12 +10,14 @@ Consider the above [program](#program-description),
 We propose the following TDD approach (but you can adapt it):
 
 ## Step 1: Seal ```LogicsImpl``` logic
+
 1. Write some tests that pass on `Logics`/`LogicsImpl` and that capture the core of the logic's functionality
 2. Implement any small additions to `Logics`/`LogicsImpl` needed to do so (e.g., additional constructors?)
 3. Do not improve `Logics`/`LogicsImpl` at this point; we will do so later
 4. Verify the system's functionality again
 
 ## Step 2: Refactor to improve design
+
 1. Consider an aspect of `LogicsImpl`'s implementation that can be externalized from `LogicsImpl` (SRP), i.e., inserted into a new class which `LogicsImpl` will be composed of
 2. Build the interface and its implementation of this new class with TDD, i.e.,
    with various red-green-refactor steps on the new class
@@ -24,11 +27,14 @@ We propose the following TDD approach (but you can adapt it):
 Repeat these steps until `LogicsImpl` has been significantly reduced.
 
 ## Step 3: Final refinements
+
 At this point:
+
 1. Use TDD to improve what remains of `LogicsImpl`
 2. Create a UML diagram of the resulting system
 
 # Program Description
+
 The goal of this exercise is to create
 a GUI with the appearance shown in the provided image:
 

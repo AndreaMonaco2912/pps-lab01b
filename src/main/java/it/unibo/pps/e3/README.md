@@ -1,10 +1,11 @@
-## Exercise 3 Description (Optional)
+# Exercise 3 Description (Optional)
 
 The goal of this exercise is to create a GUI with the appearance shown in following image:
 ![f1](https://user-images.githubusercontent.com/23448811/222984113-3ff8708f-1478-447b-9d79-f35b6ce6bc2c.png)
 Particularly, it implements a clone of the game Minesweeper -- see [https://minesweeper.online/en/](https://minesweeper.online/en/) for a recap of the game.
 
 You should implement the game, as follows:
+
 - Initially, distribute a specified number of mines at random locations, as determined by the second parameter of the GUI constructor.
 - Clicking on a cell containing a mine ends the game by showing the positions of the mines
 - Clicking on a cell that does NOT contain a mine disables the cell and shows the number of mines in immediate adjacency
@@ -31,6 +32,7 @@ It is imperative to employ flawless TDD practices.
  Estimated time for the student: 2 to 3 hours.
 
 Finding intermediate and incremental development stages is key! A possible sequence is the following:
+
 1) randomly place the mines
 2) at the first click immediately show that the game is lost, displaying the mines
 3) if someone clicks on a mine, immediately show that the game is lost by displaying the mines, otherwise allow re-click
@@ -43,12 +45,14 @@ Note that the above objectives are not for the single red-green-refactor cycle,
  which is generally much shorter.
 
 As quality objectives, take inspiration from the following:
+
 1) Strive for quality in logic, not so much in GUI - this is not a general rule, it's just for today's task
-1) Try not to violate DRY!
-2) If a method is not entirely clear and simple, find a different organization, perhaps by breaking it down into multiple methods
-3) If a class violates SRP, divide it into multiple classes (perhaps using patterns such as *Proxy*, *Template Method*, *Strategy*, or mere composition)
-4) Do not suffer from "primitive obsession": trying NOT to abuse booleans, integers, and strings. Use ad-hoc types instead!
+2) Try not to violate DRY!
+3) If a method is not entirely clear and simple, find a different organization, perhaps by breaking it down into multiple methods
+4) If a class violates SRP, divide it into multiple classes (perhaps using patterns such as *Proxy*, *Template Method*, *Strategy*, or mere composition)
+5) Do not suffer from "primitive obsession": trying NOT to abuse booleans, integers, and strings. Use ad-hoc types instead!
 
 Architectural suggestions:
+
 1) Model the position of a cell with a `Cell` interface/class, capturing the concepts of adjacency
 2) Model the grid with a `Grid` interface/class
