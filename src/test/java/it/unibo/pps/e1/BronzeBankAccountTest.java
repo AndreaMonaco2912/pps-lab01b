@@ -1,27 +1,20 @@
 package it.unibo.pps.e1;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class BronzeBankAccountTest extends CoreBankAccountTest {
 
-    @Test
-    public void testCanWithMaximalFeeWithdraw() {
-        final int deposit = 1000;
-        final int withdraw = 200; // 200 is bigger than the discriminant withdrawNumber (100)
-        final int withdrawalFee = 1;
-        this.account.deposit(deposit);
-        this.account.withdraw(withdraw);
-        assertEquals(deposit - withdraw - withdrawalFee, this.account.getBalance());
-    }
-
-    @Test
-    public void testCanWithMinimalFeeWithdraw() {
-        final int deposit = 1000;
-        final int withdraw = 99; // 99 is smaller than the discriminant withdrawNumber (100)
-        final int withdrawalFee = 0;
+    @ParameterizedTest
+    @CsvSource({
+            "1000, 200, 1", // 200 is bigger than the discriminant withdrawNumber (100)
+            "1000, 99, 0" // 99 is smaller than the discriminant withdrawNumber (100)
+    })
+    public void testWithdraw(int deposit, int withdraw, int withdrawalFee) {
         this.account.deposit(deposit);
         this.account.withdraw(withdraw);
         assertEquals(deposit - withdraw - withdrawalFee, this.account.getBalance());
