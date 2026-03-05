@@ -1,6 +1,7 @@
 package it.unibo.pps.e2;
 
 import javax.swing.*;
+import java.io.Serial;
 import java.util.*;
 import java.util.Map.Entry;
 import java.awt.*;
@@ -8,6 +9,7 @@ import java.awt.event.ActionListener;
 
 public class GUI extends JFrame {
     
+    @Serial
     private static final long serialVersionUID = -6218820567019985015L;
     private final Map<JButton,Pair<Integer,Integer>> buttons = new HashMap<>();
     private final Logics logics;
